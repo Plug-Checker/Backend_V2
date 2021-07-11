@@ -1,0 +1,15 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  profiles:
+    active: local
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;
+  jpa:
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: false

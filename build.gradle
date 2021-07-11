@@ -1,0 +1,71 @@
+buildscript {
+    ext {
+        lombokVersion = '1.18.18'
+        junitVersion = '5.6.0'
+        assertjVersion = '3.19.0'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.5.1'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'jacoco'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+apply plugin: "io.spring.dependency-management"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    // starter web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok:' + lombokVersion
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // database
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    // test database
+    testImplementation 'com.h2database:h2'
+
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: assertjVersion
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled false
+    }
+}
+
+check.dependsOn jacocoTestReport
+
+test {
+    useJUnitPlatform()
+}
