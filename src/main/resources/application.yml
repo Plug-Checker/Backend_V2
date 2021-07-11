@@ -1,3 +1,6 @@
+auth:
+  jwt:
+    secret: ${JWT_SECRET:}
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
