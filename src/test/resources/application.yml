@@ -1,3 +1,6 @@
+auth:
+  jwt:
+    secret: asdf
 spring:
   h2:
     console:
