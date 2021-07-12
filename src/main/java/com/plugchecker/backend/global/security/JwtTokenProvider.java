@@ -2,6 +2,7 @@ package com.plugchecker.backend.global.security;
 
 import com.plugchecker.backend.global.error.exception.InvalidTokenException;
 import com.plugchecker.backend.global.security.details.CustomUserDetailsService;
+import com.plugchecker.backend.domain.auth.domain.RefreshTokenRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -21,23 +22,27 @@ public class JwtTokenProvider {
 
     private final CustomUserDetailsService userDetailsService;
 
+    @Value("${auth.jwt.access}")
+    private Long accessLifespan;
+
+    @Value("${auth.jwt.refresh}")
+    private Long refreshLifespan;
+
     @Value("${auth.jwt.secret}")
     private String secretKey;
 
-    public String generateAccessToken(String value) {
-        return makingToken(value, "access", 7200L);
+    public String generateAccessToken(String id) {
+        return makingToken(id, "access", accessLifespan);
     }
 
-    public String generateRefreshToken(String value) {
-        return makingToken(value, "refresh", 172800L);
+    public String generateRefreshToken(String id) { return makingToken(id, "refresh", refreshLifespan); }
+
+    public boolean isAccessToken(String token){
+        return checkTokenType(token, "access");
     }
 
-    public boolean validateAccessToken(String token){
-        return validateToken(token, "access");
-    }
-
-    public boolean validateRefreshToken(String token){
-        return validateToken(token, "refresh");
+    public boolean isRefreshToken(String token){
+        return checkTokenType(token, "refresh");
     }
 
     public String getId(String token) {
@@ -66,7 +71,7 @@ public class JwtTokenProvider {
     }
 
 
-    private boolean validateToken(String token, String typeKind) {
+    private boolean checkTokenType(String token, String typeKind) {
         try {
             String type = Jwts.parser().setSigningKey(encodingSecretKey()).parseClaimsJws(token).getBody().get("type", String.class);
             return type.equals(typeKind);
@@ -77,7 +82,7 @@ public class JwtTokenProvider {
 
     private String makingToken(String value, String type, Long time){
         return Jwts.builder()
-                .setExpiration(new Date(System.currentTimeMillis() + (time * 1000L)))
+                .setExpiration(new Date(System.currentTimeMillis() + (time)))
                 .signWith(SignatureAlgorithm.HS512, encodingSecretKey())
                 .setIssuedAt(new Date())
                 .setSubject(value)

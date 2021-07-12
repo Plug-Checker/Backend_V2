@@ -1,6 +1,8 @@
 auth:
   jwt:
     secret: asdf
+    access: 7200000
+    refresh: 172800000
 spring:
   h2:
     console:
@@ -16,3 +18,7 @@ spring:
       hibernate:
         id:
           new_generator_mappings: false
+  redis:
+    host: local
+    port: 6379
+    password: asdf
