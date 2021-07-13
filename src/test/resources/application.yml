@@ -22,6 +22,6 @@ spring:
         id:
           new_generator_mappings: false
   redis:
-    host: local
+    host: 127.0.0.1
     port: 6379
     password: asdf
