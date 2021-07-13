@@ -50,7 +50,7 @@ public class SignUpService {
         String id = certificationNumber.getUser_id();
         String accessToken = jwtTokenProvider.generateAccessToken(id);
         String refreshToken = jwtTokenProvider.generateRefreshToken(id);
-        saveRefreshToken(refreshToken);
+        refreshTokenRepository.saveRefreshToken(refreshToken, refreshLifespan);
 
         return new TokenResponse(accessToken,refreshToken);
     }
@@ -74,29 +74,10 @@ public class SignUpService {
         certificationNumberRepository.findByEmail(email)
                 .ifPresent(certificationNumberRepository::delete);
 
-        saveCertificationNumber(email, number, id, password);
+        certificationNumberRepository.saveCertificationNumber(email, number, id, passwordEncoder.encode(password));
     }
 
     private String makeCertificationNumber() {
         return String.valueOf((int)(Math.random()*10000)-1);
-    }
-
-    private void saveCertificationNumber(String email, String number, String id, String password) {
-        CertificationNumber certificationNumber = CertificationNumber.builder()
-                .email(email)
-                .number(number)
-                .user_id(id)
-                .user_password(passwordEncoder.encode(password))
-                .exp(300000L)
-                .build();
-        certificationNumberRepository.save(certificationNumber);
-    }
-
-    private void saveRefreshToken(String token) {
-        RefreshToken refreshToken = RefreshToken.builder()
-                .refreshToken(token)
-                .exp(refreshLifespan)
-                .build();
-        refreshTokenRepository.save(refreshToken);
     }
 }

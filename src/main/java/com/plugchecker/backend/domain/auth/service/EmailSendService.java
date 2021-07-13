@@ -1,6 +1,5 @@
 package com.plugchecker.backend.domain.auth.service;
 
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +10,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Properties;
 
@@ -31,8 +31,9 @@ public class EmailSendService {
 
         // 메일에 출력할 텍스트
         StringBuffer sb = new StringBuffer();
-        sb.append("<h3>인증번호</h3>\n");
-        sb.append("<h4>" + number + "</h4>\n");
+        sb.append("<h2>인증번호</h3>\n");
+        sb.append("<h1>" + number + "</h1>");
+        sb.append("<p>PLUG-CHECKER 회원가입을 위한 인증번호입니다. 5분내로 인증해주세요.</p>");
         String html = sb.toString();
 
         // 메일 옵션 설정
@@ -51,10 +52,7 @@ public class EmailSendService {
 
             // 메일 송/수신 옵션 설정
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(fromEmail, fromUsername));
-            message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            message.setSubject(subject);
-            message.setSentDate(new Date());
+            mailSendSettigns(message, fromUsername, toEmail, subject);
 
             // 메일 콘텐츠 설정
             Multipart mParts = new MimeMultipart();
@@ -66,6 +64,8 @@ public class EmailSendService {
 
             // 메일 콘텐츠 설정
             message.setContent(mParts);
+
+            mailMimeSettings();
 
             // 메일 발송
             Transport.send( message );
@@ -98,5 +98,12 @@ public class EmailSendService {
         MailcapCmdMap.addMailcap("multipart/*;; x-java-content-handler=com.sun.mail.handlers.multipart_mixed");
         MailcapCmdMap.addMailcap("message/rfc822;; x-java-content-handler=com.sun.mail.handlers.message_rfc822");
         CommandMap.setDefaultCommandMap(MailcapCmdMap);
+    }
+
+    private void mailSendSettigns(Message message, String fromUsername, String toEmail, String subject) throws MessagingException, UnsupportedEncodingException {
+        message.setFrom(new InternetAddress(fromEmail, fromUsername));
+        message.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(toEmail, false));
+        message.setSubject(subject);
+        message.setSentDate(new Date());
     }
 }
