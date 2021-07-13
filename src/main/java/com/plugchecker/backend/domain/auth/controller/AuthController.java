@@ -5,12 +5,14 @@ import com.plugchecker.backend.domain.auth.dto.request.RefreshTokenRequest;
 import com.plugchecker.backend.domain.auth.dto.request.SignInRequest;
 import com.plugchecker.backend.domain.auth.dto.request.SignUpRequest;
 import com.plugchecker.backend.domain.auth.dto.response.TokenResponse;
-import com.plugchecker.backend.domain.auth.service.EmailSendService;
 import com.plugchecker.backend.domain.auth.service.SignInService;
 import com.plugchecker.backend.domain.auth.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 

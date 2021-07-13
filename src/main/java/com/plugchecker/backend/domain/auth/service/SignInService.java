@@ -1,6 +1,5 @@
 package com.plugchecker.backend.domain.auth.service;
 
-import com.plugchecker.backend.domain.auth.domain.RefreshToken;
 import com.plugchecker.backend.domain.auth.domain.RefreshTokenRepository;
 import com.plugchecker.backend.domain.auth.dto.request.SignInRequest;
 import com.plugchecker.backend.domain.auth.dto.response.TokenResponse;
