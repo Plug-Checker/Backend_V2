@@ -2,7 +2,6 @@ package com.plugchecker.backend.global.security;
 
 import com.plugchecker.backend.global.error.exception.InvalidTokenException;
 import com.plugchecker.backend.global.security.details.CustomUserDetailsService;
-import com.plugchecker.backend.domain.auth.domain.RefreshTokenRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
