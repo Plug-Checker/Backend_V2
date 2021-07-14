@@ -79,12 +79,12 @@ public class JwtTokenProvider {
         }
     }
 
-    private String makingToken(String value, String type, Long time){
+    private String makingToken(String id, String type, Long time){
         return Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + (time)))
                 .signWith(SignatureAlgorithm.HS512, encodingSecretKey())
                 .setIssuedAt(new Date())
-                .setSubject(value)
+                .setSubject(id)
                 .claim("type", type)
                 .compact();
     }
