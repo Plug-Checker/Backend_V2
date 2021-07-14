@@ -3,12 +3,13 @@ auth:
     secret: asdf
     access: 7200000
     refresh: 172800000
+  email:
+    address: ${EMAIL_ADDRESS:test}
+    password: ${EMAIL_PASSWORD:test}
 spring:
   h2:
     console:
       enabled: true
-  profiles:
-    active: local
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb;
@@ -19,6 +20,8 @@ spring:
         id:
           new_generator_mappings: false
   redis:
-    host: local
+    host: localhost
     port: 6379
     password: asdf
+  profiles:
+    active: test

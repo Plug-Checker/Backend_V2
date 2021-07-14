@@ -4,6 +4,6 @@ import com.plugchecker.backend.global.error.ErrorCode;
 
 public class AlreadyExistException extends GlobalException{
     public AlreadyExistException(String name) {
-        super(name + " is already exist", ErrorCode.INVALID_INPUT_VALUE);
+        super(name + " is already exist", ErrorCode.ALREADY_EXISTS);
     }
 }

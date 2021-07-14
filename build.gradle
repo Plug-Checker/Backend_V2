@@ -1,7 +1,7 @@
 buildscript {
     ext {
         lombokVersion = '1.18.18'
-        redisVersion = '0.7.0'
+        redisVersion = '0.7.2'
         jwtVersion = '0.9.1'
         junitVersion = '5.6.0'
         assertjVersion = '3.19.0'
@@ -30,6 +30,9 @@ dependencies {
     // starter web
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.projectlombok:lombok:' + lombokVersion
+
+    // mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     // lombok
     compileOnly 'org.projectlombok:lombok'

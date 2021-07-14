@@ -17,15 +17,21 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash(value = "refresh_token")
-public class RefreshToken implements Serializable {
+@RedisHash(value = "certification_number")
+public class CertificationNumber implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Indexed
-    private String refreshToken;
+    private String email;
+
+    private String number;
+
+    private String user_id;
+
+    private String user_password;
 
     @TimeToLive
     private Long exp;
