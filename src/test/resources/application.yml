@@ -10,8 +10,6 @@ spring:
   h2:
     console:
       enabled: true
-  profiles:
-    active: local
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb;
@@ -22,6 +20,8 @@ spring:
         id:
           new_generator_mappings: false
   redis:
-    host: 127.0.0.1
+    host: localhost
     port: 6379
     password: asdf
+  profiles:
+    active: test

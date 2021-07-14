@@ -20,6 +20,8 @@ spring:
     hibernate:
       use-new-id-generator-mappings: false
   redis:
-    host: ${REDIS_HOST:}
+    host: localhost
     port: ${REDIS_PORT:}
     password: ${REDIS_PASSWORD:}
+  profiles:
+    active: local

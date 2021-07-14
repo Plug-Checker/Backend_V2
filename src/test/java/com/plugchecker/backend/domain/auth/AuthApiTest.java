@@ -50,9 +50,14 @@ public class AuthApiTest extends AuthApiRequest{
         ResultActions resultActions = requestLogin(request);
 
         // then
-        resultActions.andExpect(status().isOk())
+        MvcResult result = resultActions.andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
+
+        TokenResponse response = objectMapper.readValue(
+                result.getResponse().getContentAsString(), new TypeReference<TokenResponse>() {});
+
+        Assertions.assertEquals(jwtTokenProvider.getId(response.getRefreshToken()), id);
     }
 
     @Test
