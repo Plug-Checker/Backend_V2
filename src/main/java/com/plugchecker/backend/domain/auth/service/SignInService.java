@@ -1,6 +1,7 @@
 package com.plugchecker.backend.domain.auth.service;
 
 import com.plugchecker.backend.domain.auth.domain.RefreshTokenRepository;
+import com.plugchecker.backend.domain.auth.domain.UserRepository;
 import com.plugchecker.backend.domain.auth.dto.request.SignInRequest;
 import com.plugchecker.backend.domain.auth.dto.response.TokenResponse;
 import com.plugchecker.backend.global.error.exception.InvalidTokenException;
@@ -19,6 +20,8 @@ public class SignInService {
 
     private final CustomUserDetailsService userDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
+
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
@@ -27,6 +30,11 @@ public class SignInService {
 
     public TokenResponse signIn(SignInRequest request) {
         String id = request.getId();
+
+        if(!userRepository.existsById(id)) {
+            throw new NotFoundException(request.getId());
+        }
+
         UserDetails userDetails = userDetailsService.loadUserByUsername(id);
         if(!passwordEncoder.matches(request.getPassword(), userDetails.getPassword())) {
             throw new NotFoundException(request.getId());

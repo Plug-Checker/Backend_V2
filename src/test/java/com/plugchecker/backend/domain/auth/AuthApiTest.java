@@ -2,7 +2,6 @@ package com.plugchecker.backend.domain.auth;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.plugchecker.backend.domain.auth.domain.RefreshToken;
 import com.plugchecker.backend.domain.auth.domain.RefreshTokenRepository;
 import com.plugchecker.backend.domain.auth.domain.User;
 import com.plugchecker.backend.domain.auth.domain.UserRepository;
@@ -34,7 +33,7 @@ public class AuthApiTest extends AuthApiRequest{
     private ObjectMapper objectMapper;
 
     @Test
-    void loginTest() throws Exception {
+    void loginTest_Test() throws Exception {
         // given
         String id = "testUser";
         String password = "password123123#";
@@ -61,9 +60,9 @@ public class AuthApiTest extends AuthApiRequest{
     }
 
     @Test
-    void tokenRefresh() throws Exception {
+    void tokenRefresh_Test() throws Exception {
         // given
-        String id = "testuser";
+        String id = "testUser";
         String refresh = jwtTokenProvider.generateRefreshToken(id);
         refreshTokenRepository.saveRefreshToken(refresh, 1000L);
         RefreshTokenRequest request = new RefreshTokenRequest(refresh);
