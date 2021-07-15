@@ -90,7 +90,7 @@ public class JwtTokenProviderTest extends IntegrationTest {
     void getId_Test() {
         // given
         String expectedId = "testId";
-        String token = makeToken(expectedId, "access", 1000L);
+        String token = makeToken(expectedId, "access", 10000L);
 
         // when
         String actualId = jwtTokenProvider.getId(token);
