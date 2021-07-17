@@ -17,7 +17,7 @@ public class Plug {
     private int id;
 
     @Setter
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne
