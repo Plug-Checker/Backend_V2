@@ -61,7 +61,7 @@ public class JwtTokenProvider {
     }
 
     public Boolean checkToken(String token) {
-        return token != null && token.startsWith("Bearer");
+        return token != null && token.startsWith("Bearer ");
     }
 
     public Authentication getAuthentication(String token) {
