@@ -4,12 +4,16 @@ import com.plugchecker.backend.ApiTest;
 import com.plugchecker.backend.domain.plug.dto.request.PlugIdNameRequest;
 import com.plugchecker.backend.domain.plug.dto.request.PlugIdRequest;
 import com.plugchecker.backend.domain.plug.dto.request.PlugNameRequest;
+import com.plugchecker.backend.global.security.JwtTokenProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 public class AppApiRequest extends ApiTest {
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     protected ResultActions requestGetPlugAll(String token) throws Exception {
         return requestMvc(get("/plug").header("AUTHORIZATION", "Bearer " + token));
@@ -33,5 +37,13 @@ public class AppApiRequest extends ApiTest {
 
     protected ResultActions requestDeletePlug(PlugIdRequest request, String token) throws Exception {
         return requestMvc(delete("/plug").header("AUTHORIZATION", "Bearer " + token), request);
+    }
+
+    protected String makeAccessToken(String user){
+        return jwtTokenProvider.generateAccessToken(user);
+    }
+
+    protected String makeRefreshToken(String user){
+        return jwtTokenProvider.generateRefreshToken(user);
     }
 }
