@@ -1,6 +1,7 @@
 package com.plugchecker.backend.domain.app;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.plugchecker.backend.domain.app.dto.PlugIdResponseFakeDto;
 import com.plugchecker.backend.domain.auth.domain.User;
 import com.plugchecker.backend.domain.auth.domain.UserRepository;
 import com.plugchecker.backend.domain.plug.domain.Plug;
@@ -147,8 +148,8 @@ public class AppApiTest extends AppApiRequest {
                 .andDo(print())
                 .andReturn();
 
-        PlugIdResponse response = objectMapper.readValue(
-                result.getResponse().getContentAsString(), new TypeReference<PlugIdResponse>() {});
+        PlugIdResponseFakeDto response = objectMapper.readValue(
+                result.getResponse().getContentAsString(), new TypeReference<PlugIdResponseFakeDto>() {});
 
         int id = response.getId();
         Plug plug = plugRepository.findById(id)
