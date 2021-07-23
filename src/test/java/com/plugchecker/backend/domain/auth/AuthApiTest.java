@@ -10,6 +10,7 @@ import com.plugchecker.backend.domain.auth.dto.request.SignInRequest;
 import com.plugchecker.backend.domain.auth.dto.response.TokenResponse;
 import com.plugchecker.backend.global.security.JwtTokenProvider;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,7 +34,8 @@ public class AuthApiTest extends AuthApiRequest{
     private ObjectMapper objectMapper;
 
     @Test
-    void loginTest_Test() throws Exception {
+    @DisplayName("로그인")
+    void login_Test() throws Exception {
         // given
         String id = "testUser";
         String password = "password123123#";
@@ -60,6 +62,7 @@ public class AuthApiTest extends AuthApiRequest{
     }
 
     @Test
+    @DisplayName("토큰리프레쉬")
     void tokenRefresh_Test() throws Exception {
         // given
         String id = "testUser";
