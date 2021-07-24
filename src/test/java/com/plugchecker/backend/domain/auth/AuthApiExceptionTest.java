@@ -58,9 +58,9 @@ public class AuthApiExceptionTest extends AuthApiRequest {
     void tokenRefresh_InvalidTokenException_Test() throws Exception {
         // given
         String id = "testTEST";
-        String refreshToken1 = "refreshTokenToken123123";
+        String refreshToken1 = jwtTokenProvider.generateAccessToken(id);
         String refreshToken2 = jwtTokenProvider.generateRefreshToken(id);
-        refreshTokenRepository.saveRefreshToken(refreshToken1, 1000L);
+        refreshTokenRepository.saveRefreshToken(refreshToken1, 2000L);
 
         RefreshTokenRequest request1 = new RefreshTokenRequest(refreshToken1);
         RefreshTokenRequest request2 = new RefreshTokenRequest(refreshToken2);
