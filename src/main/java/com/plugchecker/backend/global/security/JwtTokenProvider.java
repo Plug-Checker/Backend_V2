@@ -60,7 +60,7 @@ public class JwtTokenProvider {
         return null;
     }
 
-    public Boolean checkToken(String token) {
+    private Boolean checkToken(String token) {
         return token != null && token.startsWith("Bearer ");
     }
 
