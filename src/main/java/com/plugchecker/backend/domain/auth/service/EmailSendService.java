@@ -1,5 +1,6 @@
 package com.plugchecker.backend.domain.auth.service;
 
+import com.plugchecker.backend.global.error.exception.InvalidInputValueException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -49,6 +50,7 @@ public class EmailSendService {
 
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException();
         }
 
         mailSender.send(message);
