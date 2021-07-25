@@ -7,7 +7,6 @@ import com.plugchecker.backend.domain.auth.domain.RefreshTokenRepository;
 import com.plugchecker.backend.domain.auth.domain.UserRepository;
 import com.plugchecker.backend.domain.auth.dto.request.EmailRequest;
 import com.plugchecker.backend.domain.auth.dto.request.SignUpRequest;
-import com.plugchecker.backend.domain.auth.dto.response.TokenResponse;
 import com.plugchecker.backend.domain.auth.service.EmailSendService;
 import com.plugchecker.backend.domain.auth.service.SignUpService;
 import com.plugchecker.backend.global.error.exception.AlreadyExistException;
