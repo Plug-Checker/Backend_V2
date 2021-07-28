@@ -3,9 +3,6 @@ auth:
     secret: asdf
     access: 7200000
     refresh: 172800000
-  email:
-    address: ${EMAIL_ADDRESS:test}
-    password: ${EMAIL_PASSWORD:test}
 spring:
   h2:
     console:
@@ -25,3 +22,14 @@ spring:
     password: asdf
   profiles:
     active: test
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_ADDRESS:test}
+    password: ${EMAIL_PASSWORD:test}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

@@ -99,18 +99,6 @@ public class JwtTokenProviderTest extends IntegrationTest {
         Assertions.assertEquals(expectedId, actualId);
     }
 
-    @Test
-    void checkToken() {
-        // given
-        String token = "Bearer tokentokentoken";
-
-        // when
-        Boolean response = jwtTokenProvider.checkToken(token);
-
-        // then
-        Assertions.assertTrue(response);
-    }
-
     private String makeToken(String id, String type, Long time) {
         return Jwts.builder()
                 .setExpiration(new Date(System.currentTimeMillis() + (time)))

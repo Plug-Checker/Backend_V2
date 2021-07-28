@@ -6,6 +6,7 @@ import com.plugchecker.backend.domain.auth.domain.UserRepository;
 import com.plugchecker.backend.domain.auth.dto.request.RefreshTokenRequest;
 import com.plugchecker.backend.domain.auth.dto.request.SignInRequest;
 import com.plugchecker.backend.global.security.JwtTokenProvider;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.ResultActions;
@@ -23,7 +24,8 @@ public class AuthApiExceptionTest extends AuthApiRequest {
     private RefreshTokenRepository refreshTokenRepository;
 
     @Test
-    void signIn_NotFoundException_Test() throws Exception {
+    @DisplayName("로그인_NotFoundException")
+    void login_NotFoundException_Test() throws Exception {
         // given
         String fakeId = "testUserIdFake";
         String fakePassword = "testUserPasswordFake";
@@ -52,12 +54,13 @@ public class AuthApiExceptionTest extends AuthApiRequest {
     }
 
     @Test
+    @DisplayName("토큰리프레쉬_InvalidTokenException")
     void tokenRefresh_InvalidTokenException_Test() throws Exception {
         // given
         String id = "testTEST";
-        String refreshToken1 = "refreshTokenToken123123";
+        String refreshToken1 = jwtTokenProvider.generateAccessToken(id);
         String refreshToken2 = jwtTokenProvider.generateRefreshToken(id);
-        refreshTokenRepository.saveRefreshToken(refreshToken1, 1000L);
+        refreshTokenRepository.saveRefreshToken(refreshToken1, 2000L);
 
         RefreshTokenRequest request1 = new RefreshTokenRequest(refreshToken1);
         RefreshTokenRequest request2 = new RefreshTokenRequest(refreshToken2);
