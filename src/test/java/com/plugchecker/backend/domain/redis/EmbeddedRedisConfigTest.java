@@ -9,6 +9,7 @@ import redis.embedded.RedisServer;
 
 import java.lang.reflect.Field;
 
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class EmbeddedRedisConfigTest extends ServiceTest {
@@ -31,5 +32,19 @@ public class EmbeddedRedisConfigTest extends ServiceTest {
 
         // then
         verify(redisServer).stop();
+    }
+
+    @Test
+    void notStopRedis_Test() throws Exception {
+        // given
+        Field field = EmbeddedRedisConfig.class.getDeclaredField("redisServer");
+        field.setAccessible(true);
+        field.set(null, null);
+
+        // when
+        embeddedRedisConfig.stopRedis();
+
+        // then
+        verify(redisServer, times(0)).stop();
     }
 }

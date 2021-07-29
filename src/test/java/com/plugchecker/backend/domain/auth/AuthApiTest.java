@@ -11,6 +11,7 @@ import com.plugchecker.backend.domain.auth.dto.request.SignInRequest;
 import com.plugchecker.backend.domain.auth.dto.request.SignUpRequest;
 import com.plugchecker.backend.domain.auth.dto.response.TokenResponse;
 import com.plugchecker.backend.domain.auth.service.SignUpService;
+import com.plugchecker.backend.global.error.exception.NotFoundException;
 import com.plugchecker.backend.global.security.JwtTokenProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -91,10 +92,11 @@ public class AuthApiTest extends AuthApiRequest{
         // given
         String id = "testUser";
         String password = "password123123#";
+        String email = "xxxxxxxx@gmail.com";
         User user = User.builder()
                 .id(id)
                 .password(passwordEncoder.encode(password))
-                .email("xxxxxxxx@gmail.com")
+                .email(email)
                 .build();
         userRepository.save(user);
         SignInRequest request = new SignInRequest(id, password);
@@ -110,7 +112,13 @@ public class AuthApiTest extends AuthApiRequest{
         TokenResponse response = objectMapper.readValue(
                 result.getResponse().getContentAsString(), new TypeReference<TokenResponse>() {});
 
-        Assertions.assertEquals(jwtTokenProvider.getId(response.getRefreshToken()), id);
+        String findId = jwtTokenProvider.getId(response.getRefreshToken());
+        User findUser = userRepository.findById(findId)
+                .orElseThrow(()-> new NotFoundException(findId));
+
+        Assertions.assertEquals(id, findId);
+        Assertions.assertEquals(user.getPassword(), findUser.getPassword());
+        Assertions.assertEquals(email, findUser.getEmail());
     }
 
     @Test

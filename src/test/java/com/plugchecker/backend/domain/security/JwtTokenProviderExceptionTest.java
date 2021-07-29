@@ -29,5 +29,7 @@ public class JwtTokenProviderExceptionTest extends IntegrationTest {
         // when, then
         Assertions.assertThrows(InvalidTokenException.class, ()-> jwtTokenProvider.isAccessToken(token));
         Assertions.assertThrows(InvalidTokenException.class, ()-> jwtTokenProvider.isRefreshToken(token));
+        Assertions.assertThrows(InvalidTokenException.class, ()-> jwtTokenProvider.isAccessToken(null));
+        Assertions.assertThrows(InvalidTokenException.class, ()-> jwtTokenProvider.isRefreshToken(null));
     }
 }
