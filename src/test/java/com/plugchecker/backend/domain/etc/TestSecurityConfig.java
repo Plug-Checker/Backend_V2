@@ -1,5 +1,7 @@
-package com.plugchecker.backend.global.security;
+package com.plugchecker.backend.domain.etc;
 
+import com.plugchecker.backend.global.security.JwtConfigure;
+import com.plugchecker.backend.global.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,11 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Profile("local")
+@Profile("test")
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+public class TestSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -31,7 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .antMatchers("/swagger-ui/*",
                         "/swagger-ui/**",
                         "/v2/api-docs",
-                        "/swagger-resources/**").permitAll()
+                        "/swagger-resources/**",
+                        "/test*").permitAll()
                 .antMatchers("/email",
                         "/sign-up",
                         "/login",
