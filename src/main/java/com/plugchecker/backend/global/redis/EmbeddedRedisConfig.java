@@ -11,7 +11,6 @@ import javax.annotation.PreDestroy;
 import java.io.IOException;
 
 @RequiredArgsConstructor
-@Profile({"local", "test"})
 @Configuration
 public class EmbeddedRedisConfig {
 
