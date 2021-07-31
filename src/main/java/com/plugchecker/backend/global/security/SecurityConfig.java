@@ -3,6 +3,7 @@ package com.plugchecker.backend.global.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@Profile("local")
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -29,8 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .antMatchers("/swagger-ui/*",
                         "/swagger-ui/**",
                         "/v2/api-docs",
-                        "/swagger-resources/**",
-                        "/test*").permitAll()
+                        "/swagger-resources/**").permitAll()
                 .antMatchers("/email",
                         "/sign-up",
                         "/login",
