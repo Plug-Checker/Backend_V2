@@ -20,8 +20,6 @@ spring:
     host: localhost
     port: ${REDIS_PORT:}
     password: ${REDIS_PASSWORD:}
-  profiles:
-    active: local
   mail:
     host: smtp.gmail.com
     port: 587

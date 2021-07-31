@@ -1,9 +1,11 @@
 package com.plugchecker.backend.domain.security;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Profile("test")
 @RestController
 public class JwtTokenFilterTestController {
 
