@@ -1,6 +1,7 @@
 package com.plugchecker.backend.domain.auth.service;
 
 import com.plugchecker.backend.domain.auth.domain.RefreshTokenRepository;
+import com.plugchecker.backend.domain.auth.domain.User;
 import com.plugchecker.backend.domain.auth.domain.UserRepository;
 import com.plugchecker.backend.domain.auth.dto.request.SignInRequest;
 import com.plugchecker.backend.domain.auth.dto.response.TokenResponse;
@@ -31,25 +32,22 @@ public class SignInService {
     public TokenResponse signIn(SignInRequest request) {
         String id = request.getId();
 
-        if(!userRepository.existsById(id)) {
-            throw new NotFoundException(request.getId());
-        }
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(id);
-        if(!passwordEncoder.matches(request.getPassword(), userDetails.getPassword())) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(request.getId()));
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new NotFoundException(request.getId());
         }
         String accessToken = jwtTokenProvider.generateAccessToken(id);
         String refreshToken = jwtTokenProvider.generateRefreshToken(id);
         refreshTokenRepository.saveRefreshToken(refreshToken, refreshLifespan);
 
-        return new TokenResponse(accessToken,refreshToken);
+        return new TokenResponse(accessToken, refreshToken);
     }
 
     public TokenResponse tokenRefresh(String refreshToken) {
         refreshTokenRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(InvalidTokenException::new);
-        if(!jwtTokenProvider.isRefreshToken(refreshToken)) {
+        if (!jwtTokenProvider.isRefreshToken(refreshToken)) {
             throw new InvalidTokenException();
         }
         String id = jwtTokenProvider.getId(refreshToken);
@@ -58,6 +56,6 @@ public class SignInService {
         String newRefreshToken = jwtTokenProvider.generateRefreshToken(id);
         refreshTokenRepository.saveRefreshToken(refreshToken, refreshLifespan);
 
-        return new TokenResponse(newAccessToken,newRefreshToken);
+        return new TokenResponse(newAccessToken, newRefreshToken);
     }
 }
